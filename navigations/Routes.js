@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from '../src/pages/Home';
 import ConsultaSaque from '../src/pages/ConsultaSaque';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import ConsultaInvestimentoFuturo from '../src/pages/ConsultaInvestimentoFuturo';
 
 const Stack = createNativeStackNavigator();
 
@@ -35,6 +36,11 @@ function DrawerComponent() {
                 name="consultaSaque"
                 component={ConsultaSaque}
                 options={{ title: 'Calculo de saque semanal' }}
+            />
+            <Screen 
+                name="consultaInvestimentoFuturo"
+                component={ConsultaInvestimentoFuturo}
+                options={{ title: 'Consulta de Reinvestimento' }}
             />
         </Navigator>
     );
