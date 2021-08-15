@@ -8,12 +8,12 @@ function Home (props) {
     const {} = props;
     const navigation = useNavigation();
     return (
-        <View style={{ alignItems: 'center' }}>
-            <Text>Home Screen</Text>
-            <Button
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+            <Text>Acompanhamentos EmpiresX</Text>
+            {/* <Button
                 title="Go to Details"
                 onPress={() => navigation.navigate('consultaSaque')}
-            />
+            /> */}
         </View>
     )
 }

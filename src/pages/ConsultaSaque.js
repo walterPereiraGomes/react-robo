@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, ScrollView } from 'react-native';
 import NumericInput from 'react-native-numeric-input';
 import { Card, Title, Paragraph } from 'react-native-paper';
 
@@ -8,20 +8,21 @@ function ConsultaSaque () {
     const [valorRetirado, setValorRetirado] = useState(0);
     const [dolarAtual, setDolarAtual] = useState(0);
     const [resultado, setResultado] = useState(null);
+    const [countInvestidores, setCountInvestidores] = useState(3);
     const [investidores, setInvestidores] = useState([
         {
             id: 0,
-            nome: 'Walter',
+            nome: 'Investidor 1',
             investimento: 3052
         },
         {
             id: 1,
-            nome: 'Marcela',
+            nome: 'investidor 2',
             investimento: 2500
         },
         {
             id: 2,
-            nome: 'Marli',
+            nome: 'Investidor 3',
             investimento: 500
         }
     ]);
@@ -72,17 +73,56 @@ function ConsultaSaque () {
         setInvestidores([...investidoresCopy]);
     }
 
+    const changeNomeInvestidores = (index, value) => {
+        var investidoresCopy = investidores;
+        investidoresCopy[index].nome = value;
+        setInvestidores([...investidoresCopy]);
+    }
+
+    const addInvestidor = () => {
+        var novoInvestidor = {
+            id: countInvestidores + 1,
+            nome: 'Investidor ' + (countInvestidores + 1),
+            investimento: 0
+        }
+
+        setInvestidores([...investidores, novoInvestidor]);
+        setCountInvestidores(countInvestidores + 1);
+    }
+
+    const removeInvestidor = (index) => {
+        setInvestidores([...investidores.filter((i, indexArray) => indexArray != index)]);
+    }
+
     return (
-        <View>
+        <ScrollView>
             <View>
                 <Text style={{ padding: 10 }}>Investidores: </Text>
-                <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
+                <View style={{display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
                     {investidores.map((investidor, index) => (
-                        <View style={{display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center', padding: 3}} key={investidor.id}>
-                            <Text>{investidor.nome}</Text>
+                        <View style={{ width: '95%', paddingHorizontal: 3, display: 'flex',flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}} key={investidor.id}>
+                            <TextInput
+                                value={investidor.nome}
+                                style={styles.input}
+                                onChangeText={value => changeNomeInvestidores(index, value)}
+                            />
                             <NumericInput totalWidth={120} valueType='real' value={investidor.investimento} onChange={value => changeValueInvestidores(index, value)} />
+                            <Button
+                                onPress={() => removeInvestidor(index)}
+                                title="Remover"
+                                color="red"
+                                accessibilityLabel="Learn more about this purple button"
+                            />
                         </View>
                     ))}
+                </View>
+                <View style={{ alignItems: 'center', paddingVertical: 15}}>
+                    <Button 
+                        onPress={() => addInvestidor()}
+                        title="Adicionar Investidor"
+                        color="#841584"
+                        accessibilityLabel="Learn more about this purple button"
+                    />
                 </View>
                 <View>
                     <Text style={{ padding: 10 }}>Valores Atuais: </Text>
@@ -118,18 +158,19 @@ function ConsultaSaque () {
                     </Card>
                 ))}
             </View>
-        </View>
+        </ScrollView>
     )
 }
 
 const styles = StyleSheet.create({
     input: {
-      height: 40,
+      height: 48,
       margin: 12,
       borderWidth: 1,
       padding: 10,
+      width: 100
     },
-  });
+});
   
   
 
